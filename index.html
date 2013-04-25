@@ -10,6 +10,8 @@
   <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
   <script type="text/javascript" src="javascripts/script.js"></script>
+  <script src='https://cdn.firebase.com/v0/firebase.js'></script>
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.1.0/fabric.all.min.js'></script>
 
   <title>Estsauver.github.io</title>
   <meta name="description" content="Personal Website">
@@ -37,11 +39,34 @@
           <h3>Welcome to GitHub Pages.</h3>
 
 <p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<div id = "canvas" >
+  <canvas id = "c" ></canvas>
+</div>
+<script>
+var canvas = new fabric.Canvas('c', { backgroundColor: 'rgb(50,100,200)'}
+                      );
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
+var rect = new fabric.Rect({ width: 100, height: 50, fill: 'green', left: 100, top: 50 });
+canvas.add(rect)
+
+var rect2 = new fabric.Rect({ width: 100, height: 50, fill: 'green' });
+canvas.add(rect2)
+// create a rectangle object
+var canvasRef = new Firebase('https://drawsynch.firebaseio.com/');
+
+canvas.on('object:modified', function(options) {
+ 
+  canvasRef.set(canvas.toObject());
+});
+
+canvasRef.on('value', function(snapshot) {
+<!-- /*  console.log(snapshot.val())*/ -->
+  canvas.loadFromJSON(snapshot.val())
+});
+
+</script>
+
+
 
 <p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
 
