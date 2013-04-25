@@ -41,6 +41,7 @@
 <p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
 <div id = "canvas" >
   <canvas id = "c" ></canvas>
+   <canvas id = "c2" ></canvas>
 </div>
 <script>
 var canvas = new fabric.Canvas('c', { 
@@ -59,6 +60,25 @@ canvas.on('object:modified', function(options) {
 canvasRef.on('value', function(snapshot) {
 <!-- /*  console.log(snapshot.val())*/ -->
   canvas.loadFromJSON(snapshot.val())
+});
+
+
+var canvas2 = new fabric.Canvas('c2', { 
+  backgroundColor: 'rgb(255,255,255)',
+  isDrawingMode: true
+});
+
+
+var canvasRef2 = new Firebase('https://drawsynch.firebaseio.com/');
+
+canvas2.on('object:modified', function(options) {
+ 
+  canvasRef2.set(canvas.toObject());
+});
+
+canvasRef2.on('value', function(snapshot) {
+<!-- /*  console.log(snapshot.val())*/ -->
+  canvas2.loadFromJSON(snapshot.val())
 });
 
 </script>
