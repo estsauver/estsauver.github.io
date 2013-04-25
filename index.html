@@ -43,8 +43,10 @@
   <canvas id = "c" ></canvas>
 </div>
 <script>
-var canvas = new fabric.Canvas('c', { backgroundColor: 'rgb(50,100,200)'}
-                      );
+var canvas = new fabric.Canvas('c', { 
+  backgroundColor: 'rgb(50,100,200)',
+  isDrawingMode: true
+});
 
 var rect = new fabric.Rect({ width: 100, height: 50, fill: 'green', left: 100, top: 50 });
 canvas.add(rect)
