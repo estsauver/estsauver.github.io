@@ -52,7 +52,11 @@ var canvas = new fabric.Canvas('c', {
 
 var canvasRef = new Firebase('https://drawsynch.firebaseio.com/');
 
-canvas.on('path:created', function(options) {
+canvas.on('object:modified', function(options) {
+ 
+  canvasRef.set(canvas.toObject());
+});
+canvas.on('object:added', function(options) {
  
   canvasRef.set(canvas.toObject());
 });
@@ -71,9 +75,13 @@ var canvas2 = new fabric.Canvas('c2', {
 
 var canvasRef2 = new Firebase('https://drawsynch.firebaseio.com/');
 
-canvas2.on('path:created', function(options) {
+canvas2.on('object:modified', function(options) {
  
   canvasRef2.set(canvas.toObject());
+});
+canvas.on('object:added', function(options) {
+ 
+  canvasRef.set(canvas.toObject());
 });
 
 canvasRef2.on('value', function(snapshot) {
